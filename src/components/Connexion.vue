@@ -1,8 +1,8 @@
 <template>
 
-	<v-container fill-height  >
+	<v-container id="form"  fill-height  >
 
-		<v-flex xs6 offset-xs3>
+		<v-flex  offset-xs3>
 			<h1>Login</h1>
 			<v-card ref="form">
 				<v-card-text>
@@ -61,4 +61,7 @@ export default {
 
 
 <style scoped>
+#form {
+	width:75%;
+}
 </style>

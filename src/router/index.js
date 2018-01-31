@@ -40,6 +40,10 @@ export default new Router({
   name : 'modifychannel',
   path : '/modifychannel/:id/',
   component : ModifyChannel
+},
+{
+  path:"*",
+  redirect:"/conversations"
 }
 
 
