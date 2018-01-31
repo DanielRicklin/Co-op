@@ -1,14 +1,24 @@
 <template>
-	<div v-if="auteur">
+	<v-container   v-if="auteur">
 		<p><b>{{auteur}}</b> : </p>
-		<p v-if="!edit">{{message.message}}</p>
-		<form v-if="edit" @submit ="editMessage(message._id)">
-		<input v-model="edit_message"/>
-		<button type="submit">Send</button>
-</form>
-		<button v-if="user && !edit" @click="deleteMessage(message._id)"> Delete </button>
-		<button v-if="user && !edit" @click="edit=true"> Edit </button>
-	</div>
+		<v-layout   align-center row >
+			<p  v-if="!edit">{{message.message}}</p>
+			<v-container  v-if="edit" ref="form">
+
+				<v-text-field type="text" v-model="edit_message"></v-text-field>
+
+				<v-btn flat icon color ="green darken-2"  @click="editMessage(message._id)"><v-icon>done</v-icon></v-btn>
+				<v-btn flat icon color="red darken-3" @click="edit=false"><v-icon>cancel</v-icon></v-btn>
+
+			</v-container>
+			<v-spacer></v-spacer>
+			<v-btn icon v-if="user && !edit" @click="modeEdit"><v-icon > mode_edit </v-icon></v-btn>
+			<v-btn icon v-if="user && !edit" @click="deleteMessage(message._id)"><v-icon color="red darken-3"> delete</v-icon> </v-btn>
+
+
+		</v-layout>
+		<v-divider></v-divider>
+	</v-container>
 
 </template>
 
@@ -19,7 +29,6 @@ export default {
 	props : ["message"],
 	data() {
 		return {
-			auteurs:[],
 			auteur:"",
 			mon_email: this.$store.state.member,
 			user :false,
@@ -33,12 +42,12 @@ export default {
 				token : this.$store.state.token
 			}
 		}).then ((response) => {
-			this.auteurs=response.data
 			response.data.forEach(function(el){
 
 				if (this.message.member_id == el._id) {
 					this.auteur = el.fullname
 					if(el.email == this.mon_email) {
+						this.auteur="Moi"
 						this.user=true
 					}
 				}
@@ -66,11 +75,15 @@ export default {
 					token: this.$store.state.token
 				}
 			}).then((response) => {
-					this.$router.push(this.$route.path)
-					this.edit=false
+				this.$router.push(this.$route.path)
+				this.edit=false
 			}).catch ((error) => {
 				console.log(error)
 			})
+		},
+		modeEdit(){
+			this.edit=true
+			this.edit_message = this.message.message
 		}
 
 	}

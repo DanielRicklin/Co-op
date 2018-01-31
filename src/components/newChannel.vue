@@ -1,10 +1,22 @@
 <template>
-	<form @submit="addChannel">
-		<input type="text" v-model="label" placeholder="label"/>
-		<input type="text" v-model="topic" placeholder="topic"/>
+	<v-container>
+		<v-flex xs6 offset-xs3>
+			<h1>Ajout de Conversation</h1>
+			<v-card ref="form">
+				<v-card-text>
+					<v-text-field label="Titre de la Conversation" name="label" type="text" v-model="label" placeholder="ex : Anniversaire de Michel"></v-text-field>
+					<v-text-field   v-on:keyup.enter="addChannel" label="topic" name="topic" type="text"placeholder="ex :cadeau collectif" v-model="topic"></v-text-field>
+				</v-card-text>
+				<v-divider></v-divider>
+				<v-card-actions>
+					<v-spacer></v-spacer>
+					<v-btn color="green lighten-2"  @click="addChannel"
+					><v-icon>checked</v-icon>add </v-btn>
+				</v-card-actions>
+			</v-card>
+		</v-flex>
+	</v-container>
 
-		<input type="submit" />
-	</form>
 
 </template>
 

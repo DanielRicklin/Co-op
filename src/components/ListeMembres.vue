@@ -1,15 +1,16 @@
 <template>
-	<div>
+	<v-container>
 		<h1>Liste des Membres</h1>
 
-		<ul>
-			<li v-for ="membre in membres">
-				{{membre.fullname}}
-				{{membre.email}}
-				<button v-if="membre.email != email_sign " @click ="deleteMembre(membre._id,membre.email)"> Delete</button>
-			</li>
-		</ul>
-	</div>
+		<v-list>
+			<v-list-tile v-for="membre in membres" :key="membre._id">
+				<v-list-tile-content>
+					{{membre.fullname}} - {{membre.email}}
+				</v-list-tile-content>
+				<v-btn flat color="red darken-3" v-if="membre.email != email_sign " @click ="deleteMembre(membre._id,membre.email)"> <v-icon>delete</v-icon></v-btn>
+			</v-list-tile>
+		</v-list>
+	</v-container>
 </template>
 
 
@@ -23,6 +24,7 @@ export default {
 		}
 	},
 	created() {
+		window.bus.$emit('log') // vérification d'être logué
 		this.getMembres();
 	},
 	methods : {
